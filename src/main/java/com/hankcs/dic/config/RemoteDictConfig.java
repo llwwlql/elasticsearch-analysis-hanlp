@@ -3,7 +3,7 @@ package com.hankcs.dic.config;
 import com.hankcs.dic.Dictionary;
 import com.hankcs.help.ESPluginLoggerFactory;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.core.internal.io.IOUtils;
+import org.apache.lucene.util.IOUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

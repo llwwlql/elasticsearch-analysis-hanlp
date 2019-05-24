@@ -16,9 +16,9 @@ import org.apache.http.client.methods.HttpHead;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.Logger;
+import org.apache.lucene.util.IOUtils;
 import org.elasticsearch.SpecialPermission;
 import org.elasticsearch.common.collect.Tuple;
-import org.elasticsearch.core.internal.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -67,7 +67,10 @@ public class RemoteMonitor implements Runnable {
 
     @Override
     public void run() {
-        SpecialPermission.check();
+        SecurityManager sm = System.getSecurityManager();
+        if (sm != null) {
+            sm.checkPermission(new SpecialPermission());
+        }
         AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
             runUnprivileged();
             return null;

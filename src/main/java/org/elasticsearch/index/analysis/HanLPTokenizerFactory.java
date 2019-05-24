@@ -33,7 +33,7 @@ public class HanLPTokenizerFactory extends AbstractTokenizerFactory {
     private Configuration configuration;
 
     public HanLPTokenizerFactory(IndexSettings indexSettings, Environment env, String name, Settings settings, HanLPType hanLPType) {
-        super(indexSettings, settings);
+        super(indexSettings, name, settings);
         this.hanLPType = hanLPType;
         this.configuration = new Configuration(env, settings);
     }
@@ -76,26 +76,26 @@ public class HanLPTokenizerFactory extends AbstractTokenizerFactory {
         switch (this.hanLPType) {
             case INDEX:
                 configuration.enableIndexMode(true);
-                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>)HanLP::newSegment), configuration);
+                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>) HanLP::newSegment), configuration);
             case NLP:
                 configuration.enableNameRecognize(true).enableTranslatedNameRecognize(true).enableJapaneseNameRecognize(true).enablePlaceRecognize(true).enableOrganizationRecognize(true).enablePartOfSpeechTagging(true);
-                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>)HanLP::newSegment), configuration);
+                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>) HanLP::newSegment), configuration);
             case N_SHORT:
                 configuration.enableCustomDictionary(false).enablePlaceRecognize(true).enableOrganizationRecognize(true);
-                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>)NShortSegment::new), configuration);
+                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>) NShortSegment::new), configuration);
             case DIJKSTRA:
                 configuration.enableCustomDictionary(false).enablePlaceRecognize(true).enableOrganizationRecognize(true);
-                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>)DijkstraSegment::new), configuration);
+                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>) DijkstraSegment::new), configuration);
             case CRF:
                 configuration.enablePartOfSpeechTagging(true);
-                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>)CRFSegment::new), configuration);
+                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>) CRFSegment::new), configuration);
             case SPEED:
                 configuration.enableCustomDictionary(false);
-                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>)DoubleArrayTrieSegment::new), configuration);
+                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>) DoubleArrayTrieSegment::new), configuration);
             case HANLP:
             case STANDARD:
             default:
-                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>)HanLP::newSegment), configuration);
+                return TokenizerBuilder.tokenizer(AccessController.doPrivileged((PrivilegedAction<Segment>) HanLP::newSegment), configuration);
         }
     }
 }

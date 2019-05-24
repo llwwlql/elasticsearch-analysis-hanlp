@@ -4,7 +4,7 @@ import com.hankcs.cfg.Configuration;
 import com.hankcs.dic.DictionaryFile;
 import com.hankcs.help.ESPluginLoggerFactory;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.core.internal.io.IOUtils;
+import org.apache.lucene.util.IOUtils;
 import org.elasticsearch.plugin.analysis.hanlp.AnalysisHanLPPlugin;
 
 import java.io.*;
